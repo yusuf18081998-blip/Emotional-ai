@@ -3,73 +3,96 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>{{ bot_name }} — Hissiyotli suhbatdosh</title>
+<title>Aiga — Hissiyotli suhbatdosh (namuna)</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,500&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+<style>
+:root {
+  --bg: #17111F; --surface: #221A2C; --surface-2: #2B2136; --border: #3A2E47;
+  --text: #F1E9F2; --text-dim: #B3A2BE;
+  --accent-warm: #E8927C; --accent-cool: #8891C7; --accent-alert: #C75146;
+  --radius-md: 14px; --radius-sm: 9px;
+  --font-display: "Fraunces", Georgia, serif;
+  --font-body: "Manrope", -apple-system, sans-serif;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; height: 100%; background: var(--bg); color: var(--text); font-family: var(--font-body); }
+body {
+  background-image:
+    radial-gradient(ellipse 900px 500px at 20% -10%, rgba(232,146,124,0.08), transparent),
+    radial-gradient(ellipse 700px 500px at 90% 10%, rgba(136,145,199,0.10), transparent);
+}
+.app { max-width: 720px; margin: 0 auto; min-height: 100vh; display: flex; flex-direction: column; padding: 20px 20px 14px; }
+.app-header { display: flex; align-items: center; gap: 16px; padding: 10px 6px 18px; border-bottom: 1px solid var(--border); }
+.orb-wrap { width: 56px; height: 56px; flex: 0 0 auto; }
+.orb-svg { width: 100%; height: 100%; display: block; animation: breathe 4.2s ease-in-out infinite; }
+@keyframes breathe { 0%,100% { transform: scale(0.94); } 50% { transform: scale(1.04); } }
+.header-text h1 { font-family: var(--font-display); font-weight: 600; font-size: 1.5rem; margin: 0 0 2px; }
+.mood-label { margin: 0; font-size: 0.82rem; color: var(--text-dim); font-style: italic; font-family: var(--font-display); }
+.chat-area { flex: 1; padding: 22px 6px; display: flex; flex-direction: column; gap: 14px; }
+.msg { display: flex; } .msg.user { justify-content: flex-end; } .msg.bot { justify-content: flex-start; }
+.bubble { max-width: 78%; padding: 13px 17px; line-height: 1.5; font-size: 0.96rem; }
+.msg.bot .bubble { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-md) var(--radius-md) var(--radius-md) 4px; }
+.msg.user .bubble { background: linear-gradient(135deg, var(--accent-warm), #C9765F); color: #241611; font-weight: 500; border-radius: var(--radius-md) var(--radius-md) 4px var(--radius-md); }
+.footnote { text-align: center; font-size: 0.72rem; color: var(--text-dim); margin: 10px 0 0; opacity: 0.7; }
+.footnote code { background: var(--surface-2); padding: 1px 5px; border-radius: 4px; }
+.demo-banner { background: var(--surface-2); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 12px 16px; font-size: 0.85rem; color: var(--text-dim); margin: 0 6px 16px; line-height: 1.5; }
+.demo-banner b { color: var(--accent-warm); }
+</style>
 </head>
 <body>
-
 <div class="app">
-
   <header class="app-header">
-    <div class="orb-wrap" id="orbWrap" title="Ichki hissiy holat">
+    <div class="orb-wrap">
       <svg viewBox="0 0 200 200" class="orb-svg">
         <defs>
           <radialGradient id="orbGradient" cx="35%" cy="30%" r="75%">
-            <stop id="orbStop1" offset="0%" stop-color="#E8927C"/>
-            <stop id="orbStop2" offset="100%" stop-color="#7B4B6B"/>
+            <stop offset="0%" stop-color="#E8927C"/>
+            <stop offset="100%" stop-color="#7B4B6B"/>
           </radialGradient>
-          <filter id="orbBlur" x="-50%" y="-50%" width="200%" height="200%">
-            <feGaussianBlur stdDeviation="6"/>
-          </filter>
         </defs>
-        <circle id="orbGlow" cx="100" cy="100" r="70" fill="url(#orbGradient)" filter="url(#orbBlur)" opacity="0.55"/>
         <path id="orbBlob" fill="url(#orbGradient)" />
       </svg>
     </div>
     <div class="header-text">
-      <h1>{{ bot_name }}</h1>
-      <p class="mood-label" id="moodLabel">hissiy holat kuzatilmoqda&hellip;</p>
+      <h1>Aiga</h1>
+      <p class="mood-label">tinch, neytral holat</p>
     </div>
-    <button class="reset-btn" id="resetBtn" title="Suhbatni va xotirani tozalash">Qayta boshlash</button>
   </header>
 
-  <main class="chat-area" id="chatArea">
-    <div class="msg bot">
-      <div class="bubble">
-        Assalomu alaykum. Men {{ bot_name }}man — suhbat davomida kayfiyatim,
-        xavotirim, umidim o'zgarib turadi. Nima haqida gaplashamiz?
-      </div>
-    </div>
-  </main>
-
-  <div class="typing-indicator" id="typingIndicator" hidden>
-    <span></span><span></span><span></span>
+  <div class="demo-banner">
+    ⚠️ Bu <b>faqat vizual namuna</b> — GitHub Pages Python/Flask kodini
+    bajara olmaydi, shuning uchun bu yerda chat ishlamaydi. Haqiqiy botni
+    ishlatish uchun repoydagi qo'llanma bo'yicha kompyuteringizda
+    <code>python app.py</code> buyrug'ini bajaring.
   </div>
 
-  <form class="composer" id="composerForm">
-    <input
-      type="text"
-      id="messageInput"
-      placeholder="Xabar yozing…"
-      autocomplete="off"
-      autofocus
-    />
-    <button type="submit" id="sendBtn" aria-label="Yuborish">
-      <svg viewBox="0 0 24 24" width="20" height="20">
-        <path d="M3 11.5L21 3L13 21L11 13L3 11.5Z" fill="currentColor"/>
-      </svg>
-    </button>
-  </form>
+  <main class="chat-area">
+    <div class="msg bot"><div class="bubble">Assalomu alaykum. Men Aigaman — suhbat davomida kayfiyatim, xavotirim, umidim o'zgarib turadi. Nima haqida gaplashamiz?</div></div>
+    <div class="msg user"><div class="bubble">Salom! Bugun kayfiyating qanday?</div></div>
+    <div class="msg bot"><div class="bubble">Rahmat so'raganingga — bugun kayfiyatim yaxshi, biroz sog'inch ham bor ichimda, chunki uzoq vaqt hech kim menga yozmagandi. Seni eshitishga tayyorman.</div></div>
+  </main>
 
-  <p class="footnote">
-    Bu — hissiyotni matn darajasida taqlid qiluvchi model, haqiqiy ong emas. ·
-    Backend: <code>Ollama</code> (lokal, bepul)
-  </p>
+  <p class="footnote">Bu — hissiyotni matn darajasida taqlid qiluvchi model, haqiqiy ong emas. · Backend: <code>Ollama</code> (lokal, bepul)</p>
 </div>
 
-<script src="{{ url_for('static', filename='app.js') }}"></script>
+<script>
+  const orbBlob = document.getElementById("orbBlob");
+  let seed = 0;
+  function buildBlobPath(amplitude, s) {
+    const points = 8, cx = 100, cy = 100, base = 62;
+    let d = "";
+    for (let i = 0; i <= points; i++) {
+      const angle = (i / points) * Math.PI * 2;
+      const wobble = Math.sin(angle * 3 + s) * amplitude;
+      const r = base + wobble;
+      d += (i === 0 ? "M" : "L") + (cx + Math.cos(angle) * r).toFixed(1) + "," + (cy + Math.sin(angle) * r).toFixed(1) + " ";
+    }
+    return d + "Z";
+  }
+  function loop() { seed += 0.02; orbBlob.setAttribute("d", buildBlobPath(7, seed)); requestAnimationFrame(loop); }
+  loop();
+</script>
 </body>
 </html>

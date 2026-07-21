@@ -12,7 +12,7 @@ from datetime import datetime
 
 
 class Memory:
-    DATA_DIR = os.path.join(os.path.dirname(__file__), "..", "data")
+    DATA_DIR = os.path.join(os.path.dirname(__file__), "data")
 
     def __init__(self, user_id: str = "default", max_messages: int = 30):
         os.makedirs(self.DATA_DIR, exist_ok=True)

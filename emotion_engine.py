@@ -98,7 +98,7 @@ class EmotionEngine:
     """
 
     # Har bir foydalanuvchi uchun holat qayerda saqlanishi
-    STATE_DIR = os.path.join(os.path.dirname(__file__), "..", "data")
+    STATE_DIR = os.path.join(os.path.dirname(__file__), "data")
 
     # Baseline — hissiyot "dam olganda" qaytadigan nuqta
     BASELINE = EmotionalState(mood=0.2, stress=0.1, energy=0.7, trust=0.5)

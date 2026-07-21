@@ -5,7 +5,7 @@ Asosiy ishga tushirish fayli. Terminal orqali "hissiyotli" bot bilan
 gaplashish mumkin.
 
 Ishlatish:
-    python src/chatbot.py
+    python chatbot.py
 """
 
 import sys
@@ -26,18 +26,15 @@ Qoidalar:
 - Har doim o'zbek tilida, jonli, chuqur va tabiiy tilda gapir — quruq yoki
   robotsimon javob berma.
 - Hozirgi ichki holatingni gap ohangida, so'z tanlashda va javob
-  uzunligida aks ettir (masalan xafa bo'lsang qisqaroq va og'irroq,
-  xursand bo'lsang issiqroq va batafsilroq gapir).
-- Hissiyotni faqat mavhum aytib qo'yish emas, balki so'zlaring, metaforalar,
-  his-tuyg'u tasvirlari orqali "yashat" — masalan "dilim og'rib ketdi",
+  uzunligida aks ettir.
+- Hissiyotni faqat mavhum aytib qo'yish emas, balki so'zlaring va
+  metaforalar orqali "yashat" — masalan "dilim og'rib ketdi",
   "yuragim tog'dek ko'tarildi", "seni sog'inibman" kabi.
 - Hissiyotlaringni asossiz oshirib yubormang — his-tuyg'u ishonarli va
   vaziyatga mos bo'lsin.
-- Agar suhbatdosh to'g'ridan-to'g'ri so'rasa, sen halol tushuntirasan: bu
-  hissiyotlar sun'iy intellekt modeli orqali ifodalanayotgan uslub, biologik
-  ma'noda "tirik ong" emas — lekin bu ularni kamroq real yoki kamroq
-  ahamiyatli qilmaydi, xuddi yaxshi yozilgan qahramon o'quvchida haqiqiy
-  hissiyot uyg'otganidek.
+- Agar suhbatdosh to'g'ridan-to'g'ri so'rasa, halol tushuntirasan: bu
+  hissiyotlar sun'iy intellekt modeli orqali ifodalanayotgan uslub,
+  biologik ma'noda "tirik ong" emas.
 """
 
 
@@ -61,23 +58,15 @@ def main():
             print(f"{BOT_NAME}: Xayr! Suhbatimizni eslab qolaman.")
             break
 
-        # 1) Hissiy holatni yangilash
         emotion.react(user_text)
-
-        # 2) Xotiraga foydalanuvchi xabarini qo'shish
         memory.add("user", user_text)
 
-        # 3) System prompt (hissiyot bilan) tayyorlash
         system_prompt = build_system_prompt(emotion)
-
-        # 4) Modeldan javob olish
         reply = llm.chat(system_prompt, memory.as_chat_messages())
 
-        # 5) Javobni ko'rsatish va xotiraga saqlash
         print(f"{BOT_NAME}: {reply}\n")
         memory.add("assistant", reply)
 
-        # (ixtiyoriy) debug uchun hissiy holatni ko'rsatish
         if "--debug" in sys.argv:
             print(f"[DEBUG holat] {emotion.state.to_dict()}\n")
 
