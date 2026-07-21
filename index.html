@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{{ bot_name }} — Hissiyotli suhbatdosh</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,500&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div class="app">
+
+  <header class="app-header">
+    <div class="orb-wrap" id="orbWrap" title="Ichki hissiy holat">
+      <svg viewBox="0 0 200 200" class="orb-svg">
+        <defs>
+          <radialGradient id="orbGradient" cx="35%" cy="30%" r="75%">
+            <stop id="orbStop1" offset="0%" stop-color="#E8927C"/>
+            <stop id="orbStop2" offset="100%" stop-color="#7B4B6B"/>
+          </radialGradient>
+          <filter id="orbBlur" x="-50%" y="-50%" width="200%" height="200%">
+            <feGaussianBlur stdDeviation="6"/>
+          </filter>
+        </defs>
+        <circle id="orbGlow" cx="100" cy="100" r="70" fill="url(#orbGradient)" filter="url(#orbBlur)" opacity="0.55"/>
+        <path id="orbBlob" fill="url(#orbGradient)" />
+      </svg>
+    </div>
+    <div class="header-text">
+      <h1>{{ bot_name }}</h1>
+      <p class="mood-label" id="moodLabel">hissiy holat kuzatilmoqda&hellip;</p>
+    </div>
+    <button class="reset-btn" id="resetBtn" title="Suhbatni va xotirani tozalash">Qayta boshlash</button>
+  </header>
+
+  <main class="chat-area" id="chatArea">
+    <div class="msg bot">
+      <div class="bubble">
+        Assalomu alaykum. Men {{ bot_name }}man — suhbat davomida kayfiyatim,
+        xavotirim, umidim o'zgarib turadi. Nima haqida gaplashamiz?
+      </div>
+    </div>
+  </main>
+
+  <div class="typing-indicator" id="typingIndicator" hidden>
+    <span></span><span></span><span></span>
+  </div>
+
+  <form class="composer" id="composerForm">
+    <input
+      type="text"
+      id="messageInput"
+      placeholder="Xabar yozing…"
+      autocomplete="off"
+      autofocus
+    />
+    <button type="submit" id="sendBtn" aria-label="Yuborish">
+      <svg viewBox="0 0 24 24" width="20" height="20">
+        <path d="M3 11.5L21 3L13 21L11 13L3 11.5Z" fill="currentColor"/>
+      </svg>
+    </button>
+  </form>
+
+  <p class="footnote">
+    Bu — hissiyotni matn darajasida taqlid qiluvchi model, haqiqiy ong emas. ·
+    Backend: <code>Ollama</code> (lokal, bepul)
+  </p>
+</div>
+
+<script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+</html>

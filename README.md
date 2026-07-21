@@ -34,8 +34,11 @@ pip install -r requirements.txt
 #    O'rnatgandan keyin terminalda:
 ollama pull llama3.1
 # (sekinroq kompyuter uchun kichikroq model: ollama pull qwen2.5:7b)
+```
 
-# 4) Botni ishga tushirish
+### A) Terminalda ishlatish
+
+```bash
 cd src
 python chatbot.py
 ```
@@ -45,16 +48,35 @@ Debug rejimida (hissiy holatni har qadamda ko'rish uchun):
 python chatbot.py --debug
 ```
 
+### B) Brauzerda (veb-chat interfeysi)
+
+```bash
+python app.py
+```
+
+So'ng brauzerda oching: **http://localhost:5000**
+
+Bu — hissiy holatga qarab rangi va "nafas olish" tezligi o'zgaradigan
+jonli orb bilan chat sahifasi. Bu faqat kompyuteringizda ishlaydi (lokal
+server); GitHub Pages orqali internetga ochiq holda ishlatib bo'lmaydi,
+chunki Ollama ham lokal ishlaydi.
+
 ## Loyiha tuzilishi
 
 ```
 emotional-ai/
 ├── src/
-│   ├── emotion_engine.py   # Hissiy holat modeli (mood, stress, energy, trust)
+│   ├── emotion_engine.py   # Hissiy holat modeli (11 ta o'zgaruvchi)
 │   ├── memory.py           # Suhbat xotirasi (JSON fayl)
 │   ├── llm_client.py       # Ollama bilan bog'lanish
-│   └── chatbot.py          # Asosiy dastur (terminal chat)
-├── data/                   # Avtomatik yaratiladi — foydalanuvchi holati/xotirasi
+│   └── chatbot.py          # Terminal chat
+├── templates/
+│   └── index.html          # Veb-chat sahifasi
+├── static/
+│   ├── style.css           # Dizayn (jonli "orb" + chat balonchalar)
+│   └── app.js               # Chat mantiqi va orb animatsiyasi
+├── app.py                  # Flask serveri (veb-chat uchun)
+├── data/                   # Avtomatik yaratiladi — holat/xotira
 ├── requirements.txt
 └── README.md
 ```
